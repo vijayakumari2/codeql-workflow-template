@@ -15,7 +15,7 @@ jobs:
         run: |
           git config --global user.name "vijayakumari2"
           git config --global user.email "vijayakumariarilli@gmail.com"
-          echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+          echo "GT_TOKEN=${{ secrets.GT_TOKEN }}" >> $GITHUB_ENV
 
 
       - name: Install GitHub CLI
@@ -25,7 +25,7 @@ jobs:
 
       - name: Apply YAML Files to All Repos
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GT_TOKEN }}
         run: |
           TEMPLATE_REPO="vijayakumari2/codeql-workflow-template"
           WORKFLOW_DIR=".github/workflows"
