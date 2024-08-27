@@ -46,6 +46,8 @@ jobs:
                   if [ -d "$TEMPLATE_WORKFLOW_DIR" ]; then
                           FILE_NAME="codeql-analysis.yml"
                           TARGET_YAML="$REPO/$WORKFLOW_DIR/$FILE_NAME"
+                          SOURCE_YAML="$TEMPLATE_WORKFLOW_DIR/$FILE_NAME"
+
                           
                           # Check if the YAML file already exists in the target repo
                           if [ -f "$TARGET_YAML" ]; then
@@ -55,7 +57,7 @@ jobs:
                           fi
                           
                           # Copy the YAML file to the target repository's workflow directory
-                          cp $YAML_FILE $TARGET_YAML
+                          cp $SOURCE_YAML $TARGET_YAML
                       
                       
                       cd $REPO
