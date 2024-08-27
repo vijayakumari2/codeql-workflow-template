@@ -25,7 +25,7 @@ jobs:
 
       - name: Apply YAML Files to All Repos
         env:
-        GH_TOKEN: ${{ secrets.GT_TOKEN }}
+         GH_TOKEN: ${{ secrets.GT_TOKEN }}
         run: |
           TEMPLATE_REPO="vijayakumari2/codeql-workflow-template"
           WORKFLOW_DIR=".github/workflows"
