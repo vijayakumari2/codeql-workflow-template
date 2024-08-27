@@ -56,7 +56,7 @@ jobs:
                           
                           # Copy the YAML file to the target repository's workflow directory
                           cp $YAML_FILE $TARGET_YAML
-                      done
+                      
                       
                       cd $REPO
                       git add $WORKFLOW_DIR
