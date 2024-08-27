@@ -44,9 +44,7 @@ jobs:
                   
                   # Check if the template directory and workflow directory exist
                   if [ -d "$TEMPLATE_WORKFLOW_DIR" ]; then
-                      # Loop through each YAML file in the template repo
-                      for YAML_FILE in $TEMPLATE_WORKFLOW_DIR/*.yml; do
-                          FILE_NAME=$(codeql-analysis $YAML_FILE)
+                          FILE_NAME="codeql-analysis.yml"
                           TARGET_YAML="$REPO/$WORKFLOW_DIR/$FILE_NAME"
                           
                           # Check if the YAML file already exists in the target repo
