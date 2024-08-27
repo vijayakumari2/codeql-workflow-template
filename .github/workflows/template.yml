@@ -24,6 +24,8 @@ jobs:
           sudo apt-get install gh
 
       - name: Apply YAML Files to All Repos
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           TEMPLATE_REPO="vijayakumari2/codeql-workflow-template"
           WORKFLOW_DIR=".github/workflows"
