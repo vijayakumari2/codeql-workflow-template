@@ -10,6 +10,16 @@ jobs:
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v2
+        with:
+          repository: vijayakumari2/template-repo
+          path: template-repo
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "vijayakumari2"
+          git config --global user.email "vijayakumariarilli@gmail.com"
+          echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+
 
       - name: Install GitHub CLI
         run: |
