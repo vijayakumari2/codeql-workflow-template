@@ -25,19 +25,19 @@ jobs:
 
       - name: Apply YAML Files to All Repos
         env:
-          GH_TOKEN: ${{ secrets.GT_TOKEN }}
+        GH_TOKEN: ${{ secrets.GT_TOKEN }}
         run: |
           TEMPLATE_REPO="vijayakumari2/codeql-workflow-template"
           WORKFLOW_DIR=".github/workflows"
           TEMPLATE_WORKFLOW_DIR="template-repo/$WORKFLOW_DIR"
           REPOS=$(gh repo list vijayakumari2 --json name -q '.[].name')
-
+      
           # Clone the template repository to a local directory
           gh repo clone $TEMPLATE_REPO template-repo
-
+      
           for REPO in $REPOS; do
               echo "Processing $REPO..."
-
+      
               if [ "$REPO" != "${TEMPLATE_REPO#*/}" ]; then  # Skip the template repository itself
                   # Clone the target repository
                   gh repo clone vijayakumari2/$REPO
@@ -47,24 +47,24 @@ jobs:
                           FILE_NAME="codeql-analysis.yml"
                           TARGET_YAML="$REPO/$WORKFLOW_DIR/$FILE_NAME"
                           SOURCE_YAML="$TEMPLATE_WORKFLOW_DIR/$FILE_NAME"
-
-                          
-                          # Check if the YAML file already exists in the target repo
-                          if [ -f "$TARGET_YAML" ]; then
+      
+                          # Copy the YAML file to the target repository's workflow directory if it's different
+                          if ! cmp -s "$SOURCE_YAML" "$TARGET_YAML"; then
+                              cp $SOURCE_YAML $TARGET_YAML
                               echo "Overwriting existing $FILE_NAME in $REPO"
+      
+                              cd $REPO
+                              if ! git diff --quiet; then
+                                  git add $WORKFLOW_DIR
+                                  git commit -m "Add or update workflows from $TEMPLATE_REPO"
+                                  git push origin main
+                              else
+                                  echo "No changes to commit in $REPO"
+                              fi
+                              cd ..
                           else
-                              echo "Adding $FILE_NAME to $REPO"
+                              echo "$FILE_NAME in $REPO is already up to date"
                           fi
-                          
-                          # Copy the YAML file to the target repository's workflow directory
-                          cp $SOURCE_YAML $TARGET_YAML
-                      
-                      
-                      cd $REPO
-                      git add $WORKFLOW_DIR
-                      git commit -m "Add or update workflows from $TEMPLATE_REPO"
-                      git push origin main
-                      cd ..
                   else
                       echo "Template repository or workflow directory not found."
                   fi
