@@ -10,10 +10,7 @@ jobs:
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v2
-        with:
-          repository: vijayakumari2/template-repo
-          path: template-repo
-
+  
       - name: Set up Git
         run: |
           git config --global user.name "vijayakumari2"
